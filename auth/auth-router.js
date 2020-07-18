@@ -61,8 +61,9 @@ router.post("/login", async (req, res, next) => {
 
 function getJWT(username) {
   const payload = {
-    username,
-    role: "normal",
+    userId: user.id,
+    username: user.username,
+    role: "admin",
   };
 
   const options = {
