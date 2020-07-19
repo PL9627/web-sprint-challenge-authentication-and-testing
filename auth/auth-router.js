@@ -32,9 +32,9 @@ router.post("/login", async (req, res, next) => {
   // implement login
   try {
     const { username, password } = req.body;
-    const user = await Users.findBy({ username }).first();
+    /* const user = await Users.findBy({ username }).first();
 
-    if (!users) {
+    if (!user) {
       return res.status(401).json({
         message: "Invalid username",
       });
@@ -53,7 +53,24 @@ router.post("/login", async (req, res, next) => {
     res.status(200).json({
       message: `Welcome ${user.username}!`,
       token,
-    });
+    }); */
+
+    Users.findBy({username})
+    .first()
+    .then(user => {
+      if (user && bcrypt.compare(password, user.password)) {
+        const token = getJWT(user.username)
+
+        res.status(200).json({
+          message: `Welcome ${user.username}! Here is a token...`,
+          token
+        })
+      } else {
+        res.status(401).json({
+          message: "Invalid credentials"
+        })
+      }
+    })
   } catch (err) {
     next(err);
   }
@@ -61,16 +78,18 @@ router.post("/login", async (req, res, next) => {
 
 function getJWT(username) {
   const payload = {
-    userId: user.id,
-    username: user.username,
+    userId: username.id,
+    username: username.username,
     role: "admin",
   };
+
+  const secret = process.env.JWT_SECRET || "is it secret, is it safe?";
 
   const options = {
     expiresIn: "1d",
   };
 
-  return jwt.sign(payload, process.env.JWT_SECRET, options);
+  return jwt.sign(payload, secret, options);
 }
 
 module.exports = router;
