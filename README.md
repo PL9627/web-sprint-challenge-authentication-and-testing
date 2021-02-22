@@ -26,11 +26,19 @@ Be prepared to demonstrate your understanding of this week's concepts by answeri
 
 1. Differences between using _sessions_ or _JSON Web Tokens_ for authentication.
 
+    sessions store cookies on a browser for authentication.  They need a browser to function.  A JSON web token does not need a browser to pass cryptographically protected information.
+
 2. What does `bcrypt` do to help us store passwords in a secure manner.
+
+    It hashes the password to prevent others from easily seeing the password.
 
 3. How are unit tests different from integration and end-to-end testing.
 
+    Unit tests only test one part of the code.  Integration and end-to-end test multiple parts of the code at the same time.
+
 4. How _Test Driven Development_ changes the way we write applications and tests.
+
+    It helps developers to write better quality code.
 
 You are expected to be able to answer questions in these areas. Your responses contribute to your Sprint Challenge grade.
 
